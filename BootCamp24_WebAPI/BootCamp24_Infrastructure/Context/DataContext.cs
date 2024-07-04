@@ -1,4 +1,4 @@
-﻿using BootCamp_WebAPI.Domain;
+﻿using BootCamp24_Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BootCamp_WebAPI.Context
@@ -7,6 +7,6 @@ namespace BootCamp_WebAPI.Context
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Product> products { get; set; }
+        public DbSet<ProductModel> products { get; set; }
     }
 }

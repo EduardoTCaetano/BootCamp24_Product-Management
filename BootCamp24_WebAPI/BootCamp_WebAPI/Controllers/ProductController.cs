@@ -1,10 +1,8 @@
 ﻿using BootCamp_WebAPI.Context;
-using BootCamp_WebAPI.Domain;
+using BootCamp24_Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace BootCamp_WebAPI.Controllers
 {
@@ -20,13 +18,13 @@ namespace BootCamp_WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
         {
             return await _context.products.ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(Guid id)
+        public async Task<ActionResult<ProductModel>> GetProduct(Guid id)
         {
             var product = await _context.products.FindAsync(id);
 
@@ -36,7 +34,7 @@ namespace BootCamp_WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<ProductModel>> PostProduct(ProductModel product)
         {
             _context.products.Add(product);
             await _context.SaveChangesAsync();
@@ -45,7 +43,7 @@ namespace BootCamp_WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(Guid id, Product product)
+        public async Task<IActionResult> PutProduct(Guid id, ProductModel product)
         {
             if (id != product.Id) return BadRequest("The ID in the URL does not match the ID in the request body.");
 

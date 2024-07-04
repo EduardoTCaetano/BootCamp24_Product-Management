@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootCamp_WebAPI", "BootCamp_WebAPI\BootCamp_WebAPI.csproj", "{901C9C58-A2BE-4248-99C5-932745ED32E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootCamp_WebAPI", "BootCamp_WebAPI\BootCamp_WebAPI.csproj", "{901C9C58-A2BE-4248-99C5-932745ED32E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootCamp24_Domain", "BootCamp24_Domain\BootCamp24_Domain.csproj", "{2B178F6C-BC44-4D5B-BB8D-60BB75087259}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootCamp24_Infrastructure", "BootCamp24_Infrastructure\BootCamp24_Infrastructure.csproj", "{F37B3526-83D2-4F78-A552-0A572785E6C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{901C9C58-A2BE-4248-99C5-932745ED32E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{901C9C58-A2BE-4248-99C5-932745ED32E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{901C9C58-A2BE-4248-99C5-932745ED32E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B178F6C-BC44-4D5B-BB8D-60BB75087259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B178F6C-BC44-4D5B-BB8D-60BB75087259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B178F6C-BC44-4D5B-BB8D-60BB75087259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B178F6C-BC44-4D5B-BB8D-60BB75087259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F37B3526-83D2-4F78-A552-0A572785E6C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F37B3526-83D2-4F78-A552-0A572785E6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F37B3526-83D2-4F78-A552-0A572785E6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F37B3526-83D2-4F78-A552-0A572785E6C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
