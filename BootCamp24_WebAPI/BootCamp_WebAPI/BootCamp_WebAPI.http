@@ -1,0 +1,6 @@
+@BootCamp_WebAPI_HostAddress = http://localhost:7110
+
+GET {{BootCamp_WebAPI_HostAddress}}/api/products
+Accept: application/json
+
+###
