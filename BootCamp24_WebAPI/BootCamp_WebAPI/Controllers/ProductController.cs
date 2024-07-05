@@ -1,8 +1,10 @@
-﻿using BootCamp_WebAPI.Context;
+﻿using BootCamp24_Domain.Interfaces.Repository;
 using BootCamp24_Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BootCamp_WebAPI.Controllers
 {
@@ -10,34 +12,36 @@ namespace BootCamp_WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IProductRepository _repository;
 
-        public ProductsController(DataContext context)
+        public ProductsController(IProductRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductModel>>> GetProducts()
         {
-            return await _context.products.ToListAsync();
+            var products = await _repository.GetAll();
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductModel>> GetProduct(Guid id)
         {
-            var product = await _context.products.FindAsync(id);
+            var product = await _repository.GetById(id);
 
             if (product == null) return NotFound();
 
-            return product;
+            return Ok(product);
         }
 
         [HttpPost]
         public async Task<ActionResult<ProductModel>> PostProduct(ProductModel product)
         {
-            _context.products.Add(product);
-            await _context.SaveChangesAsync();
+            product.IsActive = true;
+
+            await _repository.Add(product);
 
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
@@ -47,24 +51,9 @@ namespace BootCamp_WebAPI.Controllers
         {
             if (id != product.Id) return BadRequest("The ID in the URL does not match the ID in the request body.");
 
+            if (!await _repository.Exists(id)) return NotFound();
 
-            _context.Entry(product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _repository.Update(product);
 
             return NoContent();
         }
@@ -72,23 +61,21 @@ namespace BootCamp_WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
-            var product = await _context.products.FindAsync(id);
+            var product = await _repository.GetById(id);
             if (product == null) return NotFound();
 
-            _context.products.Remove(product);
-            await _context.SaveChangesAsync();
+            await _repository.Delete(id);
             return NoContent();
         }
 
         [HttpPut("{id}/deactivate")]
         public async Task<IActionResult> DeactivateProduct(Guid id)
         {
-            var product = await _context.products.FindAsync(id);
+            var product = await _repository.GetById(id);
             if (product == null) return NotFound();
 
             product.IsActive = false;
-            _context.Entry(product).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            await _repository.Update(product);
 
             return NoContent();
         }
@@ -96,19 +83,18 @@ namespace BootCamp_WebAPI.Controllers
         [HttpPut("{id}/activate")]
         public async Task<IActionResult> ActivateProduct(Guid id)
         {
-            var product = await _context.products.FindAsync(id);
+            var product = await _repository.GetById(id);
             if (product == null) return NotFound();
 
             product.IsActive = true;
-            _context.Entry(product).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            await _repository.Update(product);
 
             return NoContent();
         }
 
-        private bool ProductExists(Guid id)
+        private async Task<bool> ProductExists(Guid id)
         {
-            return _context.products.Any(e => e.Id == id);
+            return await _repository.Exists(id);
         }
     }
 }

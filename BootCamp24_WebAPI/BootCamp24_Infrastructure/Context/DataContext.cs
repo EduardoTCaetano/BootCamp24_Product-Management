@@ -7,6 +7,6 @@ namespace BootCamp_WebAPI.Context
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<ProductModel> products { get; set; }
+        public DbSet<ProductModel> Product { get; set; }
     }
 }

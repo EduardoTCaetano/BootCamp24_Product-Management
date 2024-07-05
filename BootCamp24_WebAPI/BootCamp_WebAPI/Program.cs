@@ -1,4 +1,5 @@
 using BootCamp_WebAPI.Context;
+using BootCamp24_Domain.Interfaces.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddCors(options =>
                      .AllowAnyMethod();
     });
 });
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
